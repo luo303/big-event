@@ -11,6 +11,8 @@ export const useUserStore = defineStore(
     return { token, setToken }
   },
   {
-    persist: true // 持久化
+    persist: {
+      key: 'user'
+    }
   }
 )

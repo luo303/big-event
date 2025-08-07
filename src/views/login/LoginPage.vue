@@ -1,6 +1,11 @@
 <script setup>
 import { User, Lock } from '@element-plus/icons-vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores'
+import { userRegisterService, userLoginService } from '@/api/user'
+const userStore = useUserStore()
+const router = useRouter()
 const isRegister = ref(true)
 const form = ref()
 const formModel = ref({
@@ -41,9 +46,36 @@ const rules = {
   ]
 }
 const register = async () => {
-  await form.value.validate()
-  console.log('开始注册请求')
+  try {
+    await form.value.validate()
+    const res = await userRegisterService(formModel.value)
+    console.log(res)
+    ElMessage.success(res.data.message)
+    // 切换到登录
+    isRegister.value = false
+  } catch (error) {
+    console.log(error)
+  }
 }
+const login = async () => {
+  try {
+    await form.value.validate()
+    const res = await userLoginService(formModel.value)
+    console.log(res)
+    userStore.setToken(res.data.token)
+    ElMessage.success(res.data.message)
+    router.push('/')
+  } catch (error) {
+    console.log(error)
+  }
+}
+watch(isRegister, () => {
+  formModel.value = {
+    username: '',
+    password: '',
+    repassword: ''
+  }
+})
 </script>
 
 <template>
@@ -134,7 +166,11 @@ const register = async () => {
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button class="button" type="primary" auto-insert-space
+          <el-button
+            @click="login"
+            class="button"
+            type="primary"
+            auto-insert-space
             >登录</el-button
           >
         </el-form-item>

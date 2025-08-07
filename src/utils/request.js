@@ -1,4 +1,4 @@
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/modules/user'
 import axios from 'axios'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
@@ -26,6 +26,7 @@ instance.interceptors.response.use(
     if (res.data.code === 0) {
       return res
     }
+    console.log(res)
     ElMessage({ message: res.data.message || '服务异常', type: 'error' })
     return Promise.reject(res.data)
   },

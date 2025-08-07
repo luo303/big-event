@@ -12,6 +12,9 @@ export default defineConfig([
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
     languageOptions: {
       globals: {
+        ElMessage: 'readonly',
+        ElMessageBox: 'readonly',
+        ElLoading: 'readonly',
         ...globals.browser
       }
     }
