@@ -21,3 +21,5 @@ export const userLoginService = async ({ username, password }) => {
   }
   return res
 }
+
+export const userGetInfoService = () => request.get('/my/userinfo')
