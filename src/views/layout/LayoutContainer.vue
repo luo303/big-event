@@ -68,7 +68,7 @@ const onCommand = async (command) => {
             <el-icon><User /></el-icon>
             <span>基本资料</span>
           </el-menu-item>
-          <el-menu-item index="/user/avatar">
+          <el-menu-item index="/user/avator">
             <el-icon><Crop /></el-icon>
             <span>更换头像</span>
           </el-menu-item>
@@ -96,7 +96,7 @@ const onCommand = async (command) => {
               <el-dropdown-item command="profile" :icon="User"
                 >基本资料</el-dropdown-item
               >
-              <el-dropdown-item command="avatar" :icon="Crop"
+              <el-dropdown-item command="avator" :icon="Crop"
                 >更换头像</el-dropdown-item
               >
               <el-dropdown-item command="password" :icon="EditPen"
