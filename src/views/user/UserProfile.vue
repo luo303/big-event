@@ -11,7 +11,8 @@ const userInfo = ref({ username, nickname, email, id })
 const info = ref({
   username: userInfo.value.username,
   nickname: '',
-  email: ''
+  email: '',
+  id: userInfo.value.id
 })
 const rules = {
   nickname: [
@@ -31,14 +32,15 @@ const formRef = ref()
 const onSubmit = async () => {
   const valid = await formRef.value.validate()
   if (valid) {
-    userInfo.value.nickname = info.value.nickname
-    userInfo.value.email = info.value.email
-    await userUpdateInfoService(userInfo.value)
+    await userUpdateInfoService(info.value)
     await store.getUser()
     info.value.nickname = ''
     info.value.email = ''
     ElMessage.success('修改成功')
   }
+}
+const onReset = () => {
+  formRef.value.resetFields()
 }
 const position = ref('left')
 </script>
@@ -65,6 +67,7 @@ const position = ref('left')
         <el-button class="button" type="primary" @click="onSubmit"
           >提交修改</el-button
         >
+        <el-button @click="onReset">重置</el-button>
       </el-form-item>
     </el-form>
   </page-container>
